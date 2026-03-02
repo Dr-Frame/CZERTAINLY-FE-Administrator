@@ -104,12 +104,6 @@ export default function CustomAttributesList() {
                 width: '40%',
             },
             {
-                id: 'version',
-                content: 'Ver',
-                sortable: true,
-                width: '5%',
-            },
-            {
                 id: 'status',
                 content: 'Status',
                 sortable: true,
@@ -145,7 +139,6 @@ export default function CustomAttributesList() {
                     <Link key={customAttribute.uuid} to={`./detail/${customAttribute.uuid}`}>
                         {customAttribute.name}
                     </Link>,
-                    customAttribute.version || '',
                     <StatusBadge enabled={customAttribute.enabled} />,
                     getEnumLabel(attributeContentTypeEnum, customAttribute.contentType),
                     customAttribute.description,

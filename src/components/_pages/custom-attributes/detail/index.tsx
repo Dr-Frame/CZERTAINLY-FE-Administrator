@@ -30,7 +30,6 @@ export default function CustomAttributeDetail() {
     const isDisabling = useSelector(selectors.isDisabling);
     const resourceEnum = useSelector(enumSelectors.platformEnum(PlatformEnum.Resource));
     const attributeContentTypeEnum = useSelector(enumSelectors.platformEnum(PlatformEnum.AttributeContentType));
-    const protectionLevelEnum = useSelector(enumSelectors.platformEnum(PlatformEnum.ProtectionLevel));
 
     const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
@@ -136,10 +135,6 @@ export default function CustomAttributeDetail() {
                           columns: ['UUID', customAttribute.uuid],
                       },
                       {
-                          id: 'version',
-                          columns: ['Version', customAttribute.version || ''],
-                      },
-                      {
                           id: 'name',
                           columns: ['Name', customAttribute.name],
                       },
@@ -168,27 +163,7 @@ export default function CustomAttributeDetail() {
                       },
                       {
                           id: 'contentType',
-                          columns: [
-                              'Content Type',
-                              getEnumLabel(attributeContentTypeEnum, customAttribute.contentType) || customAttribute.contentType,
-                          ],
-                      },
-                      ...(customAttribute.list
-                          ? [
-                                {
-                                    id: 'extensibleList',
-                                    columns: ['Extensible List', customAttribute.extensibleList ? 'True' : 'False'],
-                                },
-                            ]
-                          : []),
-                      {
-                          id: 'protectionLevel',
-                          columns: [
-                              'Protection Level',
-                              customAttribute.protectionLevel != null
-                                  ? getEnumLabel(protectionLevelEnum, customAttribute.protectionLevel)
-                                  : '—',
-                          ],
+                          columns: ['Content Type', getEnumLabel(attributeContentTypeEnum, customAttribute.contentType)],
                       },
                       {
                           id: 'content',
@@ -222,7 +197,7 @@ export default function CustomAttributeDetail() {
                           ],
                       },
                   ],
-        [customAttribute, attributeContentTypeEnum, resourceEnum, protectionLevelEnum, onContentCopyClick],
+        [customAttribute, attributeContentTypeEnum, resourceEnum, onContentCopyClick],
     );
 
     return (

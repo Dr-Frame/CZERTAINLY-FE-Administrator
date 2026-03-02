@@ -91,7 +91,7 @@ const NotificationProfilesList = () => {
                 align: 'center',
             },
             {
-                id: 'version',
+                id: 'Version',
                 content: 'Version',
                 align: 'right',
             },

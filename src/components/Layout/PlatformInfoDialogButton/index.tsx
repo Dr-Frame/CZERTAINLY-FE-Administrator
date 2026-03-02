@@ -33,10 +33,6 @@ const PlatformInfoDialogLink = () => {
                 id: 'version',
                 content: 'Version',
             },
-            {
-                id: 'buildTime',
-                content: 'Build time',
-            },
         ],
         [],
     );
@@ -49,13 +45,6 @@ const PlatformInfoDialogLink = () => {
               })
             : '—';
 
-    const coreBuildTimeFormatted = platformInfo?.build?.timestamp
-        ? new Date(platformInfo?.build?.timestamp).toLocaleString(undefined, {
-              dateStyle: 'medium',
-              timeStyle: 'short',
-          })
-        : '—';
-
     const data: TableDataRow[] = useMemo(
         () =>
             !platformInfo
@@ -63,23 +52,27 @@ const PlatformInfoDialogLink = () => {
                 : [
                       {
                           id: 'app',
-                          columns: [platformInfo.app.name, platformInfo.app.version, coreBuildTimeFormatted],
-                      },
-                      {
-                          id: 'frontend',
-                          columns: ['ILM Frontend', packageJson.version, buildTimeFormatted],
+                          columns: [platformInfo.app.name, platformInfo.app.version],
                       },
                       {
                           id: 'db',
-                          columns: [platformInfo.db.system, platformInfo.db.version, ''],
+                          columns: [platformInfo.db.system, platformInfo.db.version],
+                      },
+                      {
+                          id: 'frontend',
+                          columns: ['Frontend', packageJson.version],
+                      },
+                      {
+                          id: 'deployed',
+                          columns: ['Last deployed', buildTimeFormatted],
                       },
                   ],
-        [platformInfo, buildTimeFormatted, coreBuildTimeFormatted],
+        [platformInfo, buildTimeFormatted],
     );
 
     const content = useMemo(() => {
         if (!platformInfo) return;
-        const copyText = `${platformInfo.app.name}: ${platformInfo.app.version} (${coreBuildTimeFormatted})\nILM Frontend: ${packageJson.version} (${buildTimeFormatted})\n${platformInfo.db.system}: ${platformInfo.db.version}`;
+        const copyText = `Frontend (${packageJson.name}): ${packageJson.version}\n${platformInfo.app.name}: ${platformInfo.app.version}\n${platformInfo.db.system}: ${platformInfo.db.version}\nLast deployed: ${buildTimeFormatted}`;
         return (
             <div>
                 <CustomTable data={data} headers={headers} />
@@ -102,7 +95,7 @@ const PlatformInfoDialogLink = () => {
                 </div>
             </div>
         );
-    }, [platformInfo, copyToClipboard, data, headers, buildTimeFormatted, coreBuildTimeFormatted]);
+    }, [platformInfo, copyToClipboard, data, headers, buildTimeFormatted]);
 
     return (
         <>
